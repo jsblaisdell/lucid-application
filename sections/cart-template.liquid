@@ -189,8 +189,13 @@
               <td class="cart__quantity-td text-right small--hide">
                 <div class="cart__qty">
                   <label for="updates_large_{{ item.key }}" class="cart__qty-label" data-quantity-label-desktop>{{ 'cart.label.quantity' | t }}</label>
+                  {% for tag in item.product.tags %}
+                    {% if tag contains 'moq:' %}
+                      {% assign moq = tag | split: ":" | last %}
+                    {% endif %}
+                  {% endfor %}
                   <input id="updates_large_{{ item.key }}" class="cart__qty-input" type="number"
-                    name="updates[]" value="{{ item.quantity }}" min="0" pattern="[0-9]*"
+                    name="updates[]" value="{{ item.quantity }}" min="{{moq}}" pattern="[0-9]*"
                     data-quantity-input data-quantity-item="{{ forloop.index }}" data-quantity-input-desktop data-role="product-quantity-desktop">
                 </div>
                 <div class="cart__qty-error-message-wrapper cart__qty-error-message-wrapper--desktop hide" role="alert" data-cart-quantity-error-message-wrapper>
